@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maaz Khan · Architect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400&family=Barlow+Condensed:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --sand:#c8b89a;--bone:#f0ece4;--gold:#b8935a;--warm-mid:#6b5f4e;
+  --bg:#141210;--card-bg:#1e1c19;--card-hover:#252320;--line:rgba(200,184,154,0.15);
+}
+body{font-family:'Barlow Condensed',sans-serif;background:var(--bg);color:var(--bone);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 3rem;background:rgba(20,18,16,0.92);backdrop-filter:blur(8px);border-bottom:0.5px solid var(--line)}
+.nav-logo{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:200;letter-spacing:0.3em;color:var(--bone);text-transform:uppercase}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--sand);text-decoration:none;transition:color 0.2s;cursor:pointer}
+.nav-links a:hover{color:var(--bone)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:flex-end;padding:0 3rem 5rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(160deg,#1a1814 0%,#0e0d0b 60%,#1c1812 100%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(200,184,154,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,184,154,0.04) 1px,transparent 1px);background-size:60px 60px}
+.hero-accent{position:absolute;right:0;top:0;bottom:0;width:42%;background:linear-gradient(180deg,rgba(184,147,90,0.06) 0%,transparent 60%);border-left:0.5px solid rgba(184,147,90,0.12)}
+.hero-img{position:absolute;inset:0;background-image:url('https://i.ibb.co/xqP6HywH/thumbnail.jpg');background-size:cover;background-position:center;opacity:0.18}
+.hero-content{position:relative;z-index:2;max-width:680px}
+.hero-eyebrow{font-size:0.65rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem}
+.hero-eyebrow::before{content:'';display:inline-block;width:40px;height:0.5px;background:var(--gold)}
+.hero-name{font-family:'Outfit',sans-serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:100;line-height:0.95;letter-spacing:0.08em;color:var(--bone);margin-bottom:2rem}
+.hero-name em{font-style:normal;color:var(--sand)}
+.hero-tagline{font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--warm-mid);max-width:380px;line-height:2;margin-bottom:3rem}
+.hero-cta{display:inline-flex;align-items:center;gap:1rem;font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--bone);background:transparent;border:0.5px solid rgba(200,184,154,0.3);padding:1rem 2rem;cursor:pointer;transition:all 0.3s;text-decoration:none}
+.hero-cta:hover{background:rgba(200,184,154,0.08);border-color:var(--sand)}
+.hero-scroll{position:absolute;right:3rem;bottom:3rem;display:flex;flex-direction:column;align-items:center;gap:0.8rem;z-index:2}
+.hero-scroll span{font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--warm-mid);writing-mode:vertical-rl}
+.hero-scroll-line{width:0.5px;height:60px;background:linear-gradient(to bottom,transparent,var(--gold));animation:scrollPulse 2s ease-in-out infinite}
+@keyframes scrollPulse{0%,100%{opacity:0.3;transform:scaleY(0.7)}50%{opacity:1;transform:scaleY(1)}}
+
+/* SECTIONS */
+section{padding:7rem 3rem;border-top:0.5px solid var(--line)}
+.section-header{display:flex;align-items:baseline;gap:2rem;margin-bottom:1.5rem}
+.section-number{font-family:'Outfit',sans-serif;font-size:0.75rem;color:var(--gold);font-weight:200}
+.section-title{font-family:'Outfit',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:100;color:var(--bone);line-height:1.1;letter-spacing:0.06em}
+.section-title em{font-style:normal;color:var(--sand)}
+
+/* FILTER TABS */
+.filter-tabs{display:flex;gap:0.5rem;margin-bottom:3rem;flex-wrap:wrap}
+.filter-btn{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--warm-mid);background:transparent;border:0.5px solid rgba(200,184,154,0.15);padding:0.5rem 1.2rem;cursor:pointer;transition:all 0.25s}
+.filter-btn:hover{color:var(--bone);border-color:rgba(200,184,154,0.35)}
+.filter-btn.active{color:var(--bone);border-color:var(--gold);background:rgba(184,147,90,0.07)}
+
+/* PROJECT GRID */
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.project-card{background:var(--card-bg);cursor:pointer;overflow:hidden;position:relative;transition:background 0.3s;aspect-ratio:4/3}
+.project-card:nth-child(3n+1):first-child{grid-column:span 2;aspect-ratio:16/7}
+.project-card.hidden{display:none}
+.project-card:hover{background:var(--card-hover)}
+.project-thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s ease;filter:brightness(0.82)}
+.project-card:hover .project-thumb{transform:scale(1.04);filter:brightness(0.65)}
+.project-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(14,13,11,0.92) 0%,transparent 50%);opacity:0;transition:opacity 0.35s}
+.project-card:hover .project-overlay{opacity:1}
+.project-info{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;transform:translateY(8px);transition:transform 0.35s;opacity:0}
+.project-card:hover .project-info{opacity:1;transform:translateY(0)}
+.project-category{font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem}
+.project-title{font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:200;color:var(--bone);letter-spacing:0.04em}
+.project-meta{font-size:0.6rem;letter-spacing:0.15em;color:var(--sand);margin-top:0.3rem}
+.project-view-btn{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-top:0.8rem}
+
+/* ABOUT */
+.about-layout{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+.about-text p{font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:200;line-height:1.9;color:var(--sand);margin-bottom:1.5rem;letter-spacing:0.02em}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem;padding-top:3rem;border-top:0.5px solid var(--line)}
+.stat-num{font-family:'Outfit',sans-serif;font-size:3rem;font-weight:100;color:var(--bone);line-height:1;letter-spacing:0.05em}
+.stat-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--warm-mid);margin-top:0.4rem}
+.expertise-item{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 0;border-bottom:0.5px solid var(--line)}
+.expertise-name{font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--bone)}
+.expertise-bar{width:120px;height:1px;background:rgba(200,184,154,0.1);position:relative}
+.expertise-bar-fill{position:absolute;top:0;left:0;height:100%;background:var(--gold)}
+
+/* CONTACT */
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+.contact-intro{font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:200;line-height:1.7;color:var(--sand);margin-bottom:3rem;letter-spacing:0.02em}
+.contact-details{list-style:none}
+.contact-details li{display:flex;gap:2rem;align-items:baseline;padding:1.2rem 0;border-bottom:0.5px solid var(--line)}
+.contact-label{font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--warm-mid);min-width:60px}
+.contact-value{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:200;color:var(--bone)}
+.contact-form{display:flex;flex-direction:column;gap:1.5rem}
+.form-group{display:flex;flex-direction:column;gap:0.5rem}
+.form-label{font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--warm-mid)}
+.form-input{background:transparent;border:none;border-bottom:0.5px solid rgba(200,184,154,0.2);padding:0.8rem 0;font-family:'Outfit',sans-serif;font-size:1rem;font-weight:200;color:var(--bone);outline:none;transition:border-color 0.2s;width:100%}
+.form-input:focus{border-bottom-color:var(--gold)}
+.form-input::placeholder{color:rgba(200,184,154,0.3)}
+.form-textarea{resize:none;height:100px}
+.form-submit{align-self:flex-start;display:inline-flex;align-items:center;gap:1rem;font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--bone);background:transparent;border:0.5px solid rgba(200,184,154,0.3);padding:1rem 2rem;cursor:pointer;transition:all 0.3s}
+.form-submit:hover{background:rgba(200,184,154,0.08);border-color:var(--sand)}
+
+/* FOOTER */
+footer{border-top:0.5px solid var(--line);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center}
+.footer-logo{font-family:'Outfit',sans-serif;font-size:0.9rem;font-weight:200;letter-spacing:0.3em;color:var(--warm-mid);text-transform:uppercase}
+.footer-copy{font-size:0.6rem;letter-spacing:0.15em;color:var(--warm-mid)}
+
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;inset:0;z-index:300;background:rgba(8,7,6,0.97);flex-direction:column}
+.lightbox.open{display:flex}
+.lb-header{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 2.5rem;border-bottom:0.5px solid var(--line);flex-shrink:0}
+.lb-title-wrap{}
+.lb-category{font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem}
+.lb-title{font-family:'Outfit',sans-serif;font-size:1.4rem;font-weight:200;color:var(--bone);letter-spacing:0.05em}
+.lb-close{background:none;border:none;color:var(--warm-mid);font-size:1.2rem;cursor:pointer;transition:color 0.2s;padding:0.5rem}
+.lb-close:hover{color:var(--bone)}
+.lb-main{display:flex;flex:1;overflow:hidden}
+.lb-img-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem;position:relative}
+.lb-img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.lb-arrow{position:absolute;top:50%;transform:translateY(-50%);background:none;border:0.5px solid rgba(200,184,154,0.2);color:var(--sand);font-size:1.2rem;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s}
+.lb-arrow:hover{background:rgba(200,184,154,0.08);border-color:var(--sand);color:var(--bone)}
+.lb-prev{left:1rem}
+.lb-next{right:1rem}
+.lb-sidebar{width:280px;border-left:0.5px solid var(--line);overflow-y:auto;padding:1.5rem;flex-shrink:0}
+.lb-sidebar-title{font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--warm-mid);margin-bottom:1rem}
+.lb-thumbs{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.lb-thumb{aspect-ratio:1;overflow:hidden;cursor:pointer;opacity:0.5;transition:opacity 0.2s;border:0.5px solid transparent}
+.lb-thumb:hover{opacity:0.8}
+.lb-thumb.active{opacity:1;border-color:var(--gold)}
+.lb-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.lb-desc{padding:1.5rem 2.5rem;border-top:0.5px solid var(--line);flex-shrink:0}
+.lb-desc p{font-size:0.75rem;letter-spacing:0.05em;color:var(--warm-mid);line-height:1.8}
+
+/* FADE */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{gap:1.5rem}
+  section{padding:4rem 1.5rem}
+  .hero{padding:0 1.5rem 4rem}
+  .projects-grid{grid-template-columns:1fr}
+  .project-card:nth-child(3n+1):first-child{grid-column:span 1;aspect-ratio:4/3}
+  .about-layout,.contact-layout{grid-template-columns:1fr;gap:3rem}
+  .lb-sidebar{display:none}
+  footer{flex-direction:column;gap:1rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Maaz Khan &nbsp;/&nbsp; Architect</div>
+  <ul class="nav-links">
+    <li><a onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">Work</a></li>
+    <li><a onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">About</a></li>
+    <li><a onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero" style="border-top:none">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-img"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Architect &nbsp;·&nbsp; Portfolio</div>
+    <h1 class="hero-name">Maaz<br><em>Khan</em></h1>
+    <p class="hero-tagline">Spaces that endure. Forms that inspire. Architecture at the intersection of humanity and material.</p>
+    <a class="hero-cta" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">View Selected Work &nbsp;→</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="section-header fade-in">
+    <span class="section-number">01.</span>
+    <h2 class="section-title">Selected <em>Work</em></h2>
+  </div>
+
+  <div class="filter-tabs fade-in">
+    <button class="filter-btn active" onclick="filterProjects('all')">All</button>
+    <button class="filter-btn" onclick="filterProjects('3d-visualization')">3D Visualization</button>
+    <button class="filter-btn" onclick="filterProjects('architecture')">Architecture</button>
+    <button class="filter-btn" onclick="filterProjects('interior')">Interior</button>
+    <button class="filter-btn" onclick="filterProjects('landscaping')">Landscaping</button>
+  </div>
+
+  <div class="projects-grid fade-in" id="projectsGrid">
+
+    <div class="project-card" data-cat="3d-visualization" onclick="openLightbox(0)">
+      <img class="project-thumb" src="https://i.ibb.co/N2WDPRjB/thumbnail.png" alt="CountrySide Cottage" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-category">3D Visualization</div>
+        <div class="project-title">CountrySide Cottage</div>
+        <div class="project-view-btn">View Project →</div>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="landscaping" onclick="openLightbox(1)">
+      <img class="project-thumb" src="https://i.ibb.co/cKyGr7XJ/1-1.png" alt="Ibrahim Residence Landscaping" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-category">Landscaping</div>
+        <div class="project-title">Ibrahim Residence</div>
+        <div class="project-view-btn">View Project →</div>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="3d-visualization" onclick="openLightbox(2)">
+      <img class="project-thumb" src="https://i.ibb.co/xqP6HywH/thumbnail.jpg" alt="Summer Residence" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-category">3D Visualization</div>
+        <div class="project-title">Summer Residence</div>
+        <div class="project-view-btn">View Project →</div>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="3d-visualization" onclick="openLightbox(3)">
+      <img class="project-thumb" src="https://i.ibb.co/rBywrBC/thumbnail.png" alt="Retail Facade" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-category">3D Visualization</div>
+        <div class="project-title">Retail Facade</div>
+        <div class="project-view-btn">View Project →</div>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="3d-visualization" onclick="openLightbox(4)">
+      <img class="project-thumb" src="https://i.ibb.co/N6cyZZ18/tuhmbnail.png" alt="Tuscan Wellness Center" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-category">3D Visualization</div>
+        <div class="project-title">Tuscan Wellness Center</div>
+        <div class="project-view-btn">View Project →</div>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="architecture" onclick="openLightbox(5)">
+      <img class="project-thumb" src="https://i.ibb.co/Pz3wc23J/1.png" alt="Zoya Residence" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-category">Architecture</div>
+        <div class="project-title">Zoya Residence</div>
+        <div class="project-view-btn">View Project →</div>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="architecture" onclick="openLightbox(6)">
+      <img class="project-thumb" src="https://i.ibb.co/DDNY75dK/Artboard-39-copy-3.jpg" alt="Khewra Residence" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-category">Architecture</div>
+        <div class="project-title">Khewra Residence</div>
+        <div class="project-view-btn">View Project →</div>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="interior" onclick="openLightbox(7)">
+      <img class="project-thumb" src="https://i.ibb.co/2135SfHx/thumbnail.jpg" alt="Deepak Residence" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-category">Interior</div>
+        <div class="project-title">Deepak Residence</div>
+        <div class="project-view-btn">View Project →</div>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="interior" onclick="openLightbox(8)">
+      <img class="project-thumb" src="https://i.ibb.co/CsBW38qg/1.png" alt="Ibrahim Residence Interior" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-category">Interior</div>
+        <div class="project-title">Ibrahim Residence</div>
+        <div class="project-view-btn">View Project →</div>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="interior" onclick="openLightbox(9)">
+      <img class="project-thumb" src="https://i.ibb.co/xqpz8q3y/thumbnail.png" alt="Private Residence" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-category">Interior</div>
+        <div class="project-title">Private Residence</div>
+        <div class="project-view-btn">View Project →</div>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="interior" onclick="openLightbox(10)">
+      <img class="project-thumb" src="https://i.ibb.co/F4RjhK2W/thumbnail.png" alt="Club House Pool" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-category">Interior</div>
+        <div class="project-title">Club House Pool</div>
+        <div class="project-view-btn">View Project →</div>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="interior" onclick="openLightbox(11)">
+      <img class="project-thumb" src="https://i.ibb.co/hJf19Sqb/thumbnail.png" alt="Urban Tropics" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-category">Interior</div>
+        <div class="project-title">Urban Tropics</div>
+        <div class="project-view-btn">View Project →</div>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="interior" onclick="openLightbox(12)">
+      <img class="project-thumb" src="https://i.ibb.co/Y43jxWVQ/thumbnail.png" alt="Saqib Residence" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-category">Interior</div>
+        <div class="project-title">Saqib Residence</div>
+        <div class="project-view-btn">View Project →</div>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="3d-visualization" onclick="openLightbox(13)">
+      <img class="project-thumb" src="https://cdn.prod.website-files.com/67bc5c6a38f970469c8a04e9/67f77895e93f9e7ec4d90948_Tile-additional_24.webp" alt="Terrace Garden" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-category">3D Visualization</div>
+        <div class="project-title">Terrace Garden</div>
+        <div class="project-view-btn">View Project →</div>
+      </div>
+    </div>
+
+    <div class="project-card" data-cat="3d-visualization" onclick="openLightbox(14)">
+      <img class="project-thumb" src="https://cdn.prod.website-files.com/67bc5c6a38f970469c8a04e9/68a7311522d28888584ff9f3_ZIQ_10.webp" alt="Water Garden" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-category">3D Visualization</div>
+        <div class="project-title">Water Garden</div>
+        <div class="project-view-btn">View Project →</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header fade-in">
+    <span class="section-number">02.</span>
+    <h2 class="section-title">The <em>Practice</em></h2>
+  </div>
+  <div class="about-layout fade-in">
+    <div class="about-text">
+      <p>I design spaces that negotiate between the permanence of material and the transience of light — architecture as a living dialogue between the built and the natural world.</p>
+      <p>My work spans residential, cultural, and civic typologies across 3D visualization, interior design, architecture, and landscaping — each project shaped by its specific climate, culture, and context.</p>
+      <p>I believe the architect's responsibility extends beyond form: to create environments that genuinely improve the lives of those who inhabit them.</p>
+      <div class="about-stats">
+        <div><div class="stat-num">15</div><div class="stat-label">Projects Completed</div></div>
+        <div><div class="stat-num">4</div><div class="stat-label">Disciplines</div></div>
+        <div><div class="stat-num">8</div><div class="stat-label">Clients Served</div></div>
+        <div><div class="stat-num">3</div><div class="stat-label">Countries</div></div>
+      </div>
+    </div>
+    <div style="padding-top:1rem">
+      <div class="expertise-item"><span class="expertise-name">3D Visualization</span><div class="expertise-bar"><div class="expertise-bar-fill" style="width:95%"></div></div></div>
+      <div class="expertise-item"><span class="expertise-name">Interior Design</span><div class="expertise-bar"><div class="expertise-bar-fill" style="width:90%"></div></div></div>
+      <div class="expertise-item"><span class="expertise-name">Architecture</span><div class="expertise-bar"><div class="expertise-bar-fill" style="width:85%"></div></div></div>
+      <div class="expertise-item"><span class="expertise-name">Landscaping</span><div class="expertise-bar"><div class="expertise-bar-fill" style="width:75%"></div></div></div>
+      <div class="expertise-item"><span class="expertise-name">Sustainable Design</span><div class="expertise-bar"><div class="expertise-bar-fill" style="width:70%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header fade-in">
+    <span class="section-number">03.</span>
+    <h2 class="section-title">Let's <em>Build</em></h2>
+  </div>
+  <div class="contact-layout fade-in">
+    <div>
+      <p class="contact-intro">Every significant project begins with a conversation. Tell me about your vision — I'll tell you what's possible.</p>
+      <ul class="contact-details">
+        <li><span class="contact-label">Based in</span><span class="contact-value">Karachi, Pakistan</span></li>
+        <li><span class="contact-label">Available</span><span class="contact-value">International and local projects</span></li>
+        <li><span class="contact-label">Email</span><span class="contact-value">porousdelab@gmail.com</span></li>
+        <li><span class="contact-label">Phone</span><span class="contact-value">+92 3363922013</span></li>
+      </ul>
+    </div>
+    <div class="contact-form">
+      <div class="form-group"><label class="form-label">Your Name</label><input type="text" class="form-input" placeholder="Full name"></div>
+      <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" placeholder="your@email.com"></div>
+      <div class="form-group"><label class="form-label">Project Type</label><input type="text" class="form-input" placeholder="Residential, Commercial, Interior…"></div>
+      <div class="form-group"><label class="form-label">Message</label><textarea class="form-input form-textarea" placeholder="Tell me about your project…"></textarea></div>
+      <button class="form-submit" onclick="alert('Thank you — your message has been sent. I will be in touch within 48 hours.')">Send Enquiry &nbsp;→</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Maaz Khan · Architect</div>
+  <div class="footer-copy">© 2024 · All rights reserved</div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-header">
+    <div class="lb-title-wrap">
+      <div class="lb-category" id="lbCategory"></div>
+      <div class="lb-title" id="lbTitle"></div>
+    </div>
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+  </div>
+  <div class="lb-main">
+    <div class="lb-img-wrap">
+      <button class="lb-arrow lb-prev" onclick="lbNav(-1)">‹</button>
+      <img class="lb-img" id="lbImg" src="" alt="">
+      <button class="lb-arrow lb-next" onclick="lbNav(1)">›</button>
+    </div>
+    <div class="lb-sidebar">
+      <div class="lb-sidebar-title">All Images</div>
+      <div class="lb-thumbs" id="lbThumbs"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const projects = [
+  { title:"CountrySide Cottage", cat:"3D Visualization", images:["https://i.ibb.co/27Lm3HvZ/2.png","https://i.ibb.co/gLmnHs4h/3.png","https://i.ibb.co/W4W5D3Xf/4.png","https://i.ibb.co/N2WDPRjB/thumbnail.png"] },
+  { title:"Ibrahim Residence", cat:"Landscaping", images:["https://i.ibb.co/cKyGr7XJ/1-1.png","https://i.ibb.co/h1mxvW9F/2-1.png","https://i.ibb.co/NzHRjJW/3-1.png","https://i.ibb.co/qMDtfVrp/4-1.png","https://i.ibb.co/xqwBPR07/5-1.png","https://i.ibb.co/S7QwTLV0/6.png"] },
+  { title:"Summer Residence", cat:"3D Visualization", images:["https://i.ibb.co/xqP6HywH/thumbnail.jpg","https://i.ibb.co/zYvxGKs/2.jpg","https://i.ibb.co/TDmv7FnZ/3-edit.png"] },
+  { title:"Retail Facade", cat:"3D Visualization", images:["https://i.ibb.co/rBywrBC/thumbnail.png","https://i.ibb.co/6R0HPfGZ/1.png","https://i.ibb.co/qF2gDzGy/5.png"] },
+  { title:"Tuscan Wellness Center", cat:"3D Visualization", images:["https://i.ibb.co/N6cyZZ18/tuhmbnail.png","https://i.ibb.co/PvShcDSL/Arial-edited.png","https://i.ibb.co/sdXwSD3W/beack-seat-edited.png","https://i.ibb.co/0yBmdGkB/Dining-edited.png","https://i.ibb.co/W4q44ZZ0/flower-garden-edited.png","https://i.ibb.co/67BWftf0/green-space-edited.png","https://i.ibb.co/yBF2jHy0/Walkway-edited.png"] },
+  { title:"Zoya Residence", cat:"Architecture", images:["https://i.ibb.co/Pz3wc23J/1.png","https://i.ibb.co/4ZcsZDVT/2.png","https://i.ibb.co/mVWzSTqw/3.png","https://i.ibb.co/p6c5q1MS/4.png","https://i.ibb.co/F4LGtZvy/6.png","https://i.ibb.co/ZRMPZQjh/9.png","https://i.ibb.co/gZ495bk1/11.png","https://i.ibb.co/zVNzTgZH/12.png"] },
+  { title:"Khewra Residence", cat:"Architecture", images:["https://i.ibb.co/DDNY75dK/Artboard-39-copy-3.jpg","https://i.ibb.co/NgJm192t/Artboard-39-copy-2.jpg","https://i.ibb.co/FbKzrp18/Artboard-39.jpg"] },
+  { title:"Deepak Residence", cat:"Interior", images:["https://i.ibb.co/2135SfHx/thumbnail.jpg","https://i.ibb.co/9391R6J5/1.jpg","https://i.ibb.co/JR45fgwG/2.jpg","https://i.ibb.co/RkZr9fHY/3.jpg","https://i.ibb.co/ycXdHHJh/4.jpg","https://i.ibb.co/prRZ8sCq/5.jpg","https://i.ibb.co/Ldz0d20w/6.jpg","https://i.ibb.co/nqGVfvWf/7.jpg","https://i.ibb.co/3Y9tD4wP/8.jpg","https://i.ibb.co/Q7dj4cSW/9.jpg","https://i.ibb.co/CKd0VMqB/10.jpg","https://i.ibb.co/fzTjQ4qH/11.jpg"] },
+  { title:"Ibrahim Residence", cat:"Interior", images:["https://i.ibb.co/CsBW38qg/1.png","https://i.ibb.co/fGLcVsD5/1-2-edit.png","https://i.ibb.co/qY0TLGT5/2.png","https://i.ibb.co/JFGMRT6W/2-2-edit.png","https://i.ibb.co/zWSy30sr/3.png","https://i.ibb.co/cSZwXJKH/3-edit.png","https://i.ibb.co/TDkKzS3B/4.png","https://i.ibb.co/PZqscPgy/4-edit.png","https://i.ibb.co/27mzzrjt/5.png","https://i.ibb.co/xqrj5LQz/5-edit.png","https://i.ibb.co/CjMtx92/6-2.png","https://i.ibb.co/gMK9BrWQ/6-edit.png","https://i.ibb.co/5gW9NdZ5/7-edit.png","https://i.ibb.co/JjyrmjvX/8.png","https://i.ibb.co/MypJLmcV/8-edit.png","https://i.ibb.co/vM9ByCf/9-edit.png","https://i.ibb.co/7Jbp6P78/10-edit.png","https://i.ibb.co/Xr5M8FYt/11-edit.png"] },
+  { title:"Private Residence", cat:"Interior", images:["https://i.ibb.co/xqpz8q3y/thumbnail.png","https://i.ibb.co/V0P8Bydn/B1.png","https://i.ibb.co/8gCtkqH7/B2.png","https://i.ibb.co/zV44WS4Y/D2.png","https://i.ibb.co/Kj0yWrWS/D3.png"] },
+  { title:"Club House Pool", cat:"Interior", images:["https://i.ibb.co/F4RjhK2W/thumbnail.png","https://i.ibb.co/GZ1fs6G/2.png","https://i.ibb.co/Q7DH0gDS/P4.png","https://i.ibb.co/wZYZ9NcJ/P6.png"] },
+  { title:"Urban Tropics", cat:"Interior", images:["https://i.ibb.co/hJf19Sqb/thumbnail.png","https://i.ibb.co/7dPmzVvP/outdoor-pool-2-no-logo.png","https://i.ibb.co/ZzfHYNmq/tropical-pool-no-logo.png"] },
+  { title:"Saqib Residence", cat:"Interior", images:["https://i.ibb.co/Y43jxWVQ/thumbnail.png","https://i.ibb.co/LdN5n5QF/1.png","https://i.ibb.co/rG5GW4Br/2.png","https://i.ibb.co/NgPGz260/3.png","https://i.ibb.co/wr33GsJ8/4.png","https://i.ibb.co/8D9vRNd3/6.png","https://i.ibb.co/JjK2JpRY/9.png"] },
+  { title:"Terrace Garden", cat:"3D Visualization", images:["https://cdn.prod.website-files.com/67bc5c6a38f970469c8a04e9/67f77895e93f9e7ec4d90948_Tile-additional_24.webp"] },
+  { title:"Water Garden", cat:"3D Visualization", images:["https://cdn.prod.website-files.com/67bc5c6a38f970469c8a04e9/68a7311522d28888584ff9f3_ZIQ_10.webp"] }
+];
+
+let currentProject = 0, currentImg = 0;
+
+function openLightbox(i) {
+  currentProject = i; currentImg = 0;
+  renderLightbox();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderLightbox() {
+  const p = projects[currentProject];
+  document.getElementById('lbCategory').textContent = p.cat;
+  document.getElementById('lbTitle').textContent = p.title;
+  document.getElementById('lbImg').src = p.images[currentImg];
+  const thumbs = document.getElementById('lbThumbs');
+  thumbs.innerHTML = p.images.map((src,i) =>
+    `<div class="lb-thumb ${i===currentImg?'active':''}" onclick="setImg(${i})"><img src="${src}" loading="lazy"></div>`
+  ).join('');
+}
+
+function setImg(i) {
+  currentImg = i;
+  const p = projects[currentProject];
+  document.getElementById('lbImg').src = p.images[i];
+  document.querySelectorAll('.lb-thumb').forEach((t,idx)=>t.classList.toggle('active',idx===i));
+}
+
+function lbNav(dir) {
+  const p = projects[currentProject];
+  currentImg = (currentImg + dir + p.images.length) % p.images.length;
+  setImg(currentImg);
+}
+
+function filterProjects(cat) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.project-card').forEach(card=>{
+    const c = card.dataset.cat;
+    card.classList.toggle('hidden', cat!=='all' && c!==cat);
+  });
+}
+
+document.addEventListener('keydown', e=>{
+  if(!document.getElementById('lightbox').classList.contains('open')) return;
+  if(e.key==='Escape') closeLightbox();
+  if(e.key==='ArrowRight') lbNav(1);
+  if(e.key==='ArrowLeft') lbNav(-1);
+});
+
+document.getElementById('lightbox').addEventListener('click', e=>{
+  if(e.target===document.getElementById('lightbox')) closeLightbox();
+});
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
