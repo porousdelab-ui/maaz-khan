@@ -181,6 +181,39 @@ footer{border-top:0.5px solid var(--line);padding:2.5rem 3rem;display:flex;justi
 .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.7s ease,transform 0.7s ease}
 .fade-in.visible{opacity:1;transform:translateY(0)}
 
+/* PRELOADER */
+#preloader{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity 0.8s ease,visibility 0.8s ease}
+#preloader.hidden{opacity:0;visibility:hidden}
+.preloader-logo{font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:200;letter-spacing:0.4em;color:var(--bone);text-transform:uppercase;opacity:0;animation:plFade 0.6s 0.2s ease forwards}
+.preloader-bar-wrap{width:160px;height:0.5px;background:rgba(200,184,154,0.15)}
+.preloader-bar{height:100%;width:0%;background:var(--gold);animation:plBar 1.4s 0.4s cubic-bezier(0.4,0,0.2,1) forwards}
+@keyframes plFade{to{opacity:1}}
+@keyframes plBar{to{width:100%}}
+
+/* CUSTOM CURSOR */
+#cursor{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.1s,width 0.3s,height 0.3s,opacity 0.3s;mix-blend-mode:screen}
+#cursor-ring{position:fixed;width:36px;height:36px;border:0.5px solid rgba(184,147,90,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform 0.12s ease-out,width 0.3s,height 0.3s,opacity 0.3s}
+#cursor.hover{width:14px;height:14px}
+#cursor-ring.hover{width:56px;height:56px;border-color:rgba(184,147,90,0.25)}
+body{cursor:none}
+a,button,.project-card,.filter-btn,.lb-arrow,.lb-thumb,.lb-close,.social-link{cursor:none}
+
+/* NAV HIDE/SHOW & ACTIVE */
+nav{transition:transform 0.4s ease,background 0.3s}
+nav.hidden{transform:translateY(-100%)}
+.nav-links a.active-section{color:var(--bone)}
+
+/* STAGGERED CARDS */
+.project-card{opacity:0;transform:translateY(30px);transition:opacity 0.6s ease, transform 0.6s ease, background 0.3s}
+.project-card.card-visible{opacity:1;transform:translateY(0)}
+
+/* TILT */
+.project-card{transform-style:preserve-3d;will-change:transform}
+
+/* TYPEWRITER CURSOR */
+.typewriter-cursor{display:inline-block;width:2px;height:0.8em;background:var(--gold);margin-left:3px;vertical-align:middle;animation:blink 1s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
 @media(max-width:768px){
   nav{padding:1rem 1.5rem}
   .nav-links{gap:1.5rem}
@@ -509,10 +542,10 @@ footer{border-top:0.5px solid var(--line);padding:2.5rem 3rem;display:flex;justi
       <p>Working across residential and commercial projects, he stays involved from the earliest design stages through to site — using visualization not as a presentation tool, but as a means to test ideas, resolve problems, and communicate intent.</p>
       <p>Context, critical thinking, and the practical realities of building are not constraints to his process — they are the process.</p>
       <div class="about-stats">
-        <div><div class="stat-num">15</div><div class="stat-label">Projects Completed</div></div>
-        <div><div class="stat-num">4</div><div class="stat-label">Disciplines</div></div>
-        <div><div class="stat-num">8</div><div class="stat-label">Clients Served</div></div>
-        <div><div class="stat-num">2</div><div class="stat-label">Countries</div></div>
+        <div><div class="stat-num" data-target="15">0</div><div class="stat-label">Projects Completed</div></div>
+        <div><div class="stat-num" data-target="4">0</div><div class="stat-label">Disciplines</div></div>
+        <div><div class="stat-num" data-target="8">0</div><div class="stat-label">Clients Served</div></div>
+        <div><div class="stat-num" data-target="2">0</div><div class="stat-label">Countries</div></div>
       </div>
     </div>
     <div style="padding-top:1rem">
@@ -663,6 +696,25 @@ const observer = new IntersectionObserver(entries=>{
   entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
 },{threshold:0.1});
 document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+const counterObserver = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting) return;
+    const el = entry.target;
+    const target = +el.dataset.target;
+    const duration = 900;
+    const step = 16;
+    const increment = target / (duration / step);
+    let current = 0;
+    const timer = setInterval(()=>{
+      current += increment;
+      if(current >= target){ current = target; clearInterval(timer); }
+      el.textContent = Math.floor(current);
+    }, step);
+    counterObserver.unobserve(el);
+  });
+},{threshold:0.5});
+document.querySelectorAll('.stat-num[data-target]').forEach(el=>counterObserver.observe(el));
 </script>
 </body>
 </html>
